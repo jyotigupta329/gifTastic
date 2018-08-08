@@ -41,7 +41,7 @@
     }
 
     .addBtn {
-        background: yellow;
+        background: lightblue;
         margin: 5px;
     }
 
@@ -76,7 +76,7 @@
             <div class="col">
                 <form id="gif-form">
                     <label for="gif-input">
-                        <h3>Add animal</h3>
+                        <h3 style="margin-right: 5px; padding: 10px">Add animal</h3>
                     </label>
 
                     <input type="text" id="gif-input" placeholder="Animal name">
@@ -105,7 +105,7 @@
 
                 // Then dynamicaly generating buttons for each animal in the array
                 var a = $("<button class='addBtn btn'>");
-                a.addClass("gifs");
+                a.addClass("gifsBtn");
                 a.attr("data-name", gifsArray[i]);
                 a.text(gifsArray[i]);
                 $("#buttons-view").append(a);
@@ -127,7 +127,7 @@
         });
 
         // added a click event listener to all elements with the class "gifs"
-        $(document).on("click", ".gifs", function () {
+        $(document).on("click", ".gifsBtn", function () {
 
             var gifName = $(this).attr("data-name");
 
@@ -141,11 +141,17 @@
                 console.log(response);
                 var results = response.data;
                 for (var i = 0; i < results.length; i++) {
-
+                    console.log(results[i].images.fixed_height.url);
                     var animalDiv = $("<div class='col-md-4 polaroid'>");
                     var p = $("<p>").text("Rating: " + results[i].rating);
-                    var animalImage = $("<img>");
+                    var animalImage = $("<img class= 'imgAnimate'>");
                     animalImage.attr("src", results[i].images.fixed_height.url);
+
+                    animalImage.attr("data-still", results[i].images.fixed_height_still.url);
+                    animalImage.attr("data-state", 'animate');
+                    animalImage.attr("data-animate", results[i].images.fixed_height.url);
+                    // animalImage.attr("class", "imgAnimate");
+
                     animalDiv.append(p);
                     animalDiv.append(animalImage);
 
@@ -153,11 +159,30 @@
                     $("#gifs-appear-here").prepend(animalDiv);
 
                 }
+
             });
         });
 
-        // Calling the renderButtons function to display the intial buttons
+        // Calling the renderButtons function to display the intial buttons fixed_height_still
+
         renderButtons();
+
+
+        $(document).on('click', '.imgAnimate', function (response) {
+            var state = $(this).attr("data-state");
+            console.log("State of image : " + state);
+            if (state === "still") {
+                var url = $(this).attr("data-animate");
+                $(this).attr("src", url);
+                $(this).attr("data-state", "animate");
+
+            } else if (state === "animate") {
+                var url = $(this).attr("data-still");
+                console.log("State of image : " + url);
+                $(this).attr("src", url);
+                $(this).attr("data-state", "still")
+            }
+        });
     </script>
 
 </body>
