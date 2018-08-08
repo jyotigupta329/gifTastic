@@ -97,7 +97,7 @@
     </div>
     <script type="text/javascript">
 
-        var gifsArray = ["Dog", "Elephant", "cat", "Lion", "Tiger", "Horse", "Monkey", "Leopard", "Deer", "Rabbit", "Bat", "Cow", "Giraffe", "Fish", "Zebra", "Turtle", "Sheep", "Kangaroo"];
+        var gifsArray = ["dog", "elephant", "cat", "lion", "tiger", "horse", "monkey", "leopard", "deer", "rabbit", "bat", "cow", "giraffe", "fish", "zebra", "turtle", "sheep", "kangaroo"];
 
         // Function for displaying animal data
         function renderButtons() {
@@ -121,7 +121,8 @@
 
             event.preventDefault();
             // This line grabs the input from the textbox
-            var gif = $("#gif-input").val().trim();
+            var gif = $("#gif-input").val().trim().toLowerCase();
+             
             // Adding the animal from the textbox to our array
             if (gif) {
                 if (!(gifsArray.indexOf(gif) > -1)) {
