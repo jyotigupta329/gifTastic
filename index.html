@@ -97,7 +97,7 @@
     </div>
     <script type="text/javascript">
 
-        var gifsArray = ["dog", "elephant", "cat", "lion", "tiger", "horse", "monkey", "leopard", "deer", "rabbit", "bat", "cow", "giraffe", "fish", "zebra", "turtle", "sheep", "kangaroo"];
+        var topics = ["dog", "elephant", "cat", "lion", "tiger", "horse", "monkey", "leopard", "deer", "rabbit", "bat", "cow", "giraffe", "fish", "zebra", "turtle", "sheep", "kangaroo"];
 
         // Function for displaying animal data
         function renderButtons() {
@@ -105,13 +105,13 @@
             $("#buttons-view").empty();
 
             // Looping through the array of animals
-            for (var i = 0; i < gifsArray.length; i++) {
+            for (var i = 0; i < topics.length; i++) {
 
                 // Then dynamicaly generating buttons for each animal in the array
                 var a = $("<button class='addBtn btn'>");
                 a.addClass("gifsBtn");
-                a.attr("data-name", gifsArray[i]);
-                a.text(gifsArray[i]);
+                a.attr("data-name", topics[i]);
+                a.text(topics[i]);
                 $("#buttons-view").append(a);
             }
         }
@@ -122,11 +122,11 @@
             event.preventDefault();
             // This line grabs the input from the textbox
             var gif = $("#gif-input").val().trim().toLowerCase();
-             
+
             // Adding the animal from the textbox to our array
             if (gif) {
-                if (!(gifsArray.indexOf(gif) > -1)) {
-                    gifsArray.push(gif);
+                if (!(topics.indexOf(gif) > -1)) {
+                    topics.push(gif);
                     renderButtons();
 
 
@@ -147,7 +147,7 @@
 
             console.log("Capture GIF:" + gifName);
 
-            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifName + "&api_key=XqOQPLYR3n3DUDtPa5rZFGjvjihES3c5&limit=12";
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifName + "&api_key=XqOQPLYR3n3DUDtPa5rZFGjvjihES3c5&limit=10";
             $.ajax({
                 url: queryURL,
                 method: "GET"
@@ -159,10 +159,10 @@
                     var animalDiv = $("<div class='col-md-4 polaroid'>");
                     var p = $("<p class='pfont'>").text("Rating: " + results[i].rating);
                     var animalImage = $("<img class= 'imgAnimate'>");
-                    animalImage.attr("src", results[i].images.fixed_height.url);
-
+                    animalImage.attr("src", results[i].images.fixed_height_still.url);
+                    
                     animalImage.attr("data-still", results[i].images.fixed_height_still.url);
-                    animalImage.attr("data-state", 'animate');
+                    animalImage.attr("data-state", 'still');
                     animalImage.attr("data-animate", results[i].images.fixed_height.url);
                     // animalImage.attr("class", "imgAnimate");
 
