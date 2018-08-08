@@ -14,12 +14,11 @@
 </head>
 <style>
     img {
-        width: 100%;
-        /* height: 200px; */
+        width: 300px;
+        height: 200px;
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 5px;
-
     }
 
     .pfont {
@@ -31,12 +30,11 @@
     } */
 
     div.polaroid {
-        width: 100%;
+        width: 30%;
         background-color: white;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         margin-bottom: 25px;
         margin-right: 25px;
-
     }
 
     div.container {
@@ -58,9 +56,8 @@
     }
 
     .jumbotronStyle {
-        
-        background-image: url("./images/giphy.webp");
-        /* background-image: url("https://media.giphy.com/media/oFIsOPef8bLcA85goC/giphy.gif"); */
+        background: pink;
+        /* background-image: url("https://gph.is/2jV9A7S"); */
     }
 </style>
 
@@ -97,17 +94,12 @@
         </div>
     </div>
     <script type="text/javascript">
-
         var topics = ["dog", "elephant", "cat", "lion", "tiger", "horse", "monkey", "leopard", "deer", "rabbit", "bat", "cow", "giraffe", "fish", "zebra", "turtle", "sheep", "kangaroo"];
-
         // Function for displaying animal data
         function renderButtons() {
-
             $("#buttons-view").empty();
-
             // Looping through the array of animals
             for (var i = 0; i < topics.length; i++) {
-
                 // Then dynamicaly generating buttons for each animal in the array
                 var a = $("<button class='addBtn btn'>");
                 a.addClass("gifsBtn");
@@ -116,21 +108,16 @@
                 $("#buttons-view").append(a);
             }
         }
-
         // This function handles events where one button is clicked
         $("#add-gif").on("click", function (event) {
-
             event.preventDefault();
             // This line grabs the input from the textbox
             var gif = $("#gif-input").val().trim().toLowerCase();
-
             // Adding the animal from the textbox to our array
             if (gif) {
                 if (!(topics.indexOf(gif) > -1)) {
                     topics.push(gif);
                     renderButtons();
-
-
                 } else {
                     alert(gif + " Already exists!!");
                 }
@@ -140,14 +127,10 @@
             // clears the textbox
             $("#gif-input").val("");
         });
-
         // added a click event listener to all elements with the class "gifs"
         $(document).on("click", ".gifsBtn", function () {
-
             var gifName = $(this).attr("data-name");
-
             console.log("Capture GIF:" + gifName);
-
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifName + "&api_key=XqOQPLYR3n3DUDtPa5rZFGjvjihES3c5&limit=10";
             $.ajax({
                 url: queryURL,
@@ -156,38 +139,25 @@
                 console.log(response);
                 var results = response.data;
                 for (var i = 0; i < results.length; i++) {
-                    
+                    console.log(results[i].images.fixed_height.url);
                     var animalDiv = $("<div class='col-md-4 polaroid'>");
                     var p = $("<p class='pfont'>").text("Rating: " + results[i].rating);
-                    var oneClickBtn = $("<button>").text("1-Click");
-                        oneClickBtn.attr()
-                    var animalImage = $("<img class= 'imgAnimate thumbnail'>");
+                    var animalImage = $("<img class= 'imgAnimate'>");
                     animalImage.attr("src", results[i].images.fixed_height_still.url);
 
                     animalImage.attr("data-still", results[i].images.fixed_height_still.url);
                     animalImage.attr("data-state", 'still');
                     animalImage.attr("data-animate", results[i].images.fixed_height.url);
                     // animalImage.attr("class", "imgAnimate");
-
                     animalDiv.append(p);
-                    animalDiv.append(oneClickBtn);
                     animalDiv.append(animalImage);
-
-                    
-
                     // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
                     $("#gifs-appear-here").prepend(animalDiv);
-
                 }
-
             });
         });
-
         // Calling the renderButtons function to display the intial buttons fixed_height_still
-
         renderButtons();
-
-
         $(document).on('click', '.imgAnimate', function (response) {
             var state = $(this).attr("data-state");
             console.log("State of image : " + state);
@@ -195,7 +165,6 @@
                 var url = $(this).attr("data-animate");
                 $(this).attr("src", url);
                 $(this).attr("data-state", "animate");
-
             } else if (state === "animate") {
                 var url = $(this).attr("data-still");
                 console.log("State of image : " + url);
