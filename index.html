@@ -14,8 +14,8 @@
 </head>
 <style>
     img {
-        width: 300px;
-        height: 200px;
+        width: 100%;
+        /* height: 200px; */
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 5px;
@@ -31,7 +31,7 @@
     } */
 
     div.polaroid {
-        width: 30%;
+        width: 100%;
         background-color: white;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         margin-bottom: 25px;
@@ -58,8 +58,9 @@
     }
 
     .jumbotronStyle {
-        /* background: violet; */
-        background-image: url("https://media.giphy.com/media/oFIsOPef8bLcA85goC/giphy.gif");
+        
+        background-image: url("./images/giphy.webp");
+        /* background-image: url("https://media.giphy.com/media/oFIsOPef8bLcA85goC/giphy.gif"); */
     }
 </style>
 
@@ -155,19 +156,24 @@
                 console.log(response);
                 var results = response.data;
                 for (var i = 0; i < results.length; i++) {
-                    console.log(results[i].images.fixed_height.url);
+                    
                     var animalDiv = $("<div class='col-md-4 polaroid'>");
                     var p = $("<p class='pfont'>").text("Rating: " + results[i].rating);
-                    var animalImage = $("<img class= 'imgAnimate'>");
+                    var oneClickBtn = $("<button>").text("1-Click");
+                        oneClickBtn.attr()
+                    var animalImage = $("<img class= 'imgAnimate thumbnail'>");
                     animalImage.attr("src", results[i].images.fixed_height_still.url);
-                    
+
                     animalImage.attr("data-still", results[i].images.fixed_height_still.url);
                     animalImage.attr("data-state", 'still');
                     animalImage.attr("data-animate", results[i].images.fixed_height.url);
                     // animalImage.attr("class", "imgAnimate");
 
                     animalDiv.append(p);
+                    animalDiv.append(oneClickBtn);
                     animalDiv.append(animalImage);
+
+                    
 
                     // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
                     $("#gifs-appear-here").prepend(animalDiv);
